@@ -12,9 +12,15 @@
   color: #fff;
 }
 
-.search-btn { background-color: #2196f3; }
-.add-btn    { background-color: #4caf50; }
-.btn-add    { background-color: #ff9800; }
+.search-btn {
+  background-color: #2196f3;
+}
+.add-btn {
+  background-color: #4caf50;
+}
+.btn-add {
+  background-color: #ff9800;
+}
 
 /* =========================
    Section Container
@@ -120,7 +126,7 @@ select {
 }
 
 #roomTypesContainer .qty-room-wrapper {
-  width: 49%; 
+  width: 49%;
   border: 1px solid #ccc;
   padding: 4px 6px;
   border-radius: 6px;
@@ -166,11 +172,29 @@ select {
 /* =========================
    Rate Section
 ========================= */
-.rate-section {
-  margin-top: 30px;
-  padding: 20px;
-  background: #fff;
-  border-radius: 10px;
+.rate-table-scroll table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.rate-table-scroll th,
+.rate-table-scroll td {
+  text-align: center;
+  padding: 4px;
+  border: 1px solid #ccc;
+}
+
+.rate-table-scroll th.colored-block-ep,
+.rate-table-scroll th.colored-block-cp,
+.rate-table-scroll th.colored-block-map,
+.rate-table-scroll th.colored-block-ap,
+.rate-table-scroll td.ep,
+.rate-table-scroll td.cp,
+.rate-table-scroll td.map,
+.rate-table-scroll td.ap {
+  width: 100px;
+  min-width: 100px;
+  max-width: 100px;
 }
 
 /* =========================
@@ -187,10 +211,22 @@ select {
 /* =========================
    Colored Table Blocks
 ========================= */
-.colored-block-ep, td.ep   { background-color: #dff0d8; }
-.colored-block-cp, td.cp   { background-color: #fcf8e3; }
-.colored-block-map, td.map { background-color: #f2dede; }
-.colored-block-ap, td.ap   { background-color: #d9edf7; }
+.colored-block-ep,
+td.ep {
+  background-color: #dff0d8;
+}
+.colored-block-cp,
+td.cp {
+  background-color: #fcf8e3;
+}
+.colored-block-map,
+td.map {
+  background-color: #f2dede;
+}
+.colored-block-ap,
+td.ap {
+  background-color: #d9edf7;
+}
 
 /* =========================
    Rate Table
@@ -257,16 +293,36 @@ thead th {
    Responsive Design
 ========================= */
 @media (max-width: 1024px) {
-  .form-group { flex: 1 1 45%; }
-  .rate-controls { flex-wrap: wrap; }
+  .form-group {
+    flex: 1 1 45%;
+  }
+  .rate-controls {
+    flex-wrap: wrap;
+  }
   .rate-controls .form-group,
-  .rate-controls .form-group.remarks { width: 100%; }
+  .rate-controls .form-group.remarks {
+    width: 100%;
+  }
 }
 
 @media (max-width: 768px) {
-  #hotelSection { padding: 15px; }
-  .form-group { flex: 1 1 100%; }
-  .qty-room-wrapper { flex-direction: column; align-items: flex-start; width: 100%; }
-  .rate-controls { flex-direction: column; align-items: stretch; }
-  .rate-controls .btn-add { width: 100%; align-self: stretch; }
+  #hotelSection {
+    padding: 15px;
+  }
+  .form-group {
+    flex: 1 1 100%;
+  }
+  .qty-room-wrapper {
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+  }
+  .rate-controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .rate-controls .btn-add {
+    width: 100%;
+    align-self: stretch;
+  }
 }
