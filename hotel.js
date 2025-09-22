@@ -1,112 +1,100 @@
 // ============================
 // Toggle Hotel Form
 // ============================
-const hotelBtn = document.getElementById('hotelBtn');
-const hotelForm = document.getElementById('hotelForm');
-hotelForm.style.display = 'none'; // hide initially
+const hotelBtn = document.getElementById("hotelBtn");
+const hotelForm = document.getElementById("hotelForm");
+hotelForm.style.display = "none"; // hide initially
 
-hotelBtn.addEventListener('click', () => {
-  const visible = hotelForm.style.display === 'block';
-  hotelForm.style.display = visible ? 'none' : 'block';
-  hotelBtn.textContent = visible ? 'Add New Hotel' : 'Hide Form';
+let editingHotelIndex = null; 
+
+hotelBtn.addEventListener("click", () => {
+  const visible = hotelForm.style.display === "block";
+  hotelForm.style.display = visible ? "none" : "block";
+  hotelBtn.textContent = visible ? "Add New Hotel" : "Hide Form";
+  if (visible) {
+    editingHotelIndex = null;
+    hotelForm.reset();
+    touristTypeTables = {};
+    document.getElementById("rateTablesContainer").innerHTML = "";
+  }
 });
 
 // ============================
-// Generic Clone/Remove Utility
+// Clone/Remove Room Types
 // ============================
 function setupClone(containerId) {
   const container = document.getElementById(containerId);
 
   function updateRemoveBtns() {
-    const wrappers = container.querySelectorAll('.qty-room-wrapper');
-    wrappers.forEach(btnWrap => {
-      const removeBtn = btnWrap.querySelector('.remove-room-btn');
+    const wrappers = container.querySelectorAll(".qty-room-wrapper");
+    wrappers.forEach((btnWrap) => {
+      const removeBtn = btnWrap.querySelector(".remove-room-btn");
       if (removeBtn) removeBtn.disabled = wrappers.length <= 1;
     });
   }
 
   function removeItem(e) {
-    if (container.querySelectorAll('.qty-room-wrapper').length > 1) {
-      e.target.closest('.qty-room-wrapper').remove();
+    if (container.querySelectorAll(".qty-room-wrapper").length > 1) {
+      e.target.closest(".qty-room-wrapper").remove();
       updateRemoveBtns();
     }
   }
 
   function addItem() {
-    const firstWrapper = container.querySelector('.qty-room-wrapper');
+    const firstWrapper = container.querySelector(".qty-room-wrapper");
     const clone = firstWrapper.cloneNode(true);
-    clone.querySelectorAll('input').forEach(inp => inp.value = '');
-    clone.querySelector('.remove-room-btn').addEventListener('click', removeItem);
-    clone.querySelector('.add-room-btn').addEventListener('click', addItem);
+    clone
+      .querySelectorAll("input")
+      .forEach((inp) => (inp.value = inp.type === "number" ? "0" : ""));
+    clone
+      .querySelector(".remove-room-btn")
+      .addEventListener("click", removeItem);
+    clone.querySelector(".add-room-btn").addEventListener("click", addItem);
     container.appendChild(clone);
     updateRemoveBtns();
   }
 
-  container.querySelectorAll('.remove-room-btn').forEach(btn => btn.addEventListener('click', removeItem));
-  container.querySelectorAll('.add-room-btn').forEach(btn => btn.addEventListener('click', addItem));
+  container
+    .querySelectorAll(".remove-room-btn")
+    .forEach((btn) => btn.addEventListener("click", removeItem));
+  container
+    .querySelectorAll(".add-room-btn")
+    .forEach((btn) => btn.addEventListener("click", addItem));
   updateRemoveBtns();
 }
 
-setupClone('deptEmailContainer');
-setupClone('deptPhoneContainer');
-
-// ============================
-// Clone/Remove Room Types (Horizontal)
-// ============================
-const roomTypesContainer = document.getElementById('roomTypesContainer');
-
-function updateRoomRemoveButtons() {
-  const wrappers = roomTypesContainer.querySelectorAll('.qty-room-wrapper');
-  wrappers.forEach(wrapper => {
-    const btn = wrapper.querySelector('.remove-room-btn');
-    if (btn) btn.disabled = wrappers.length <= 1;
-  });
-}
-
-function removeRoom(e) {
-  if (roomTypesContainer.querySelectorAll('.qty-room-wrapper').length > 1) {
-    e.target.closest('.qty-room-wrapper').remove();
-    updateRoomRemoveButtons();
-  }
-}
-
-function addRoom() {
-  const firstWrapper = roomTypesContainer.querySelector('.qty-room-wrapper');
-  const clone = firstWrapper.cloneNode(true);
-  clone.querySelectorAll('input').forEach(inp => inp.value = inp.type === 'number' ? '0' : '');
-  clone.querySelector('.remove-room-btn').addEventListener('click', removeRoom);
-  clone.querySelector('.add-room-btn').addEventListener('click', addRoom);
-  roomTypesContainer.appendChild(clone);
-  updateRoomRemoveButtons();
-}
-
-// init
-roomTypesContainer.querySelectorAll('.remove-room-btn').forEach(btn => btn.addEventListener('click', removeRoom));
-roomTypesContainer.querySelectorAll('.add-room-btn').forEach(btn => btn.addEventListener('click', addRoom));
-updateRoomRemoveButtons();
+setupClone("deptEmailContainer");
+setupClone("deptPhoneContainer");
+setupClone("roomTypesContainer"); // add for rooms
 
 // ============================
 // Rate Table Add Functionality
 // ============================
 let touristTypeTables = {};
 
-document.getElementById('addTableBtn').addEventListener('click', () => {
-  const type = document.getElementById('touristType').value;
-  const from = document.getElementById('rateFrom').value;
-  const to = document.getElementById('rateTo').value;
-  const remarks = document.getElementById('remarks').value.trim();
-  const currency = document.getElementById('currency').value;
+document.getElementById("addTableBtn").addEventListener("click", () => {
+  const type = document.getElementById("touristType").value;
+  const from = document.getElementById("rateFrom").value;
+  const to = document.getElementById("rateTo").value;
+  const remarks = document.getElementById("remarks").value.trim();
+  const currency = document.getElementById("currency").value;
 
-  // collect rooms
   const rooms = [];
-  roomTypesContainer.querySelectorAll('.qty-room-wrapper').forEach(wrap => {
-    const rt = wrap.querySelector('input[type="text"]').value.trim();
-    const qty = parseInt(wrap.querySelector('input[type="number"]').value, 10);
-    if (rt && qty > 0) rooms.push({ rt, qty });
-  });
+  document
+    .querySelectorAll("#roomTypesContainer .qty-room-wrapper")
+    .forEach((wrap) => {
+      const rt = wrap.querySelector('input[type="text"]').value.trim();
+      const qty = parseInt(
+        wrap.querySelector('input[type="number"]').value,
+        10
+      );
+      if (rt && qty > 0) rooms.push({ rt, qty });
+    });
 
   if (!type || !from || !to || !currency || rooms.length === 0) {
-    alert("Please fill all required fields and add at least one room type with quantity > 0.");
+    alert(
+      "Please fill all required fields and add at least one room type with quantity > 0."
+    );
     return;
   }
 
@@ -115,73 +103,93 @@ document.getElementById('addTableBtn').addEventListener('click', () => {
 });
 
 function renderTables() {
-  const container = document.getElementById('rateTablesContainer');
-  container.innerHTML = '';
+  const container = document.getElementById("rateTablesContainer");
+  container.innerHTML = "";
 
-  Object.keys(touristTypeTables).forEach(type => {
+  Object.keys(touristTypeTables).forEach((type) => {
     const data = touristTypeTables[type];
-    const block = document.createElement('div');
-    block.className = 'saved-block';
+    const block = document.createElement("div");
+    block.className = "saved-block";
+
+    // Header columns for rates
+    const rateCategories = ["EP", "CP", "MAP", "AP"];
+    const rateSubCols = ["Dbl", "Sgl", "EB", "CWB", "CNB"];
 
     block.innerHTML = `
       <h3>${type}</h3>
       <p>Valid: ${data.from} to ${data.to} | Remarks: ${data.remarks}</p>
       <div class="rate-table-scroll" style="overflow-x:auto;">
-        <table>
+        <table border="1" cellpadding="5">
           <thead>
             <tr>
               <th rowspan="2">Room Type</th>
               <th rowspan="2">Qty</th>
-              <th colspan="5" class="colored-block-ep">EP</th>
-              <th colspan="5" class="colored-block-cp">CP</th>
-              <th colspan="5" class="colored-block-map">MAP</th>
-              <th colspan="5" class="colored-block-ap">AP</th>
+              ${rateCategories
+                .map(
+                  (rc) =>
+                    `<th colspan="5" class="colored-block-${rc.toLowerCase()}">${rc}</th>`
+                )
+                .join("")}
             </tr>
             <tr>
-              ${['EP','CP','MAP','AP'].map(cls =>
-                ['Dbl','Sgl','EB','CWB','CNB'].map(h =>
-                  `<th class="colored-block-${cls.toLowerCase()}">${h}</th>`
-                ).join('')
-              ).join('')}
+              ${rateCategories
+                .map((rc) =>
+                  rateSubCols
+                    .map(
+                      (sc) =>
+                        `<th class="colored-block-${rc.toLowerCase()}">${sc}</th>`
+                    )
+                    .join("")
+                )
+                .join("")}
             </tr>
           </thead>
           <tbody>
-            ${data.rooms.map(room => `
+            ${data.rooms
+              .map(
+                (r) => `
               <tr>
-                <td>${room.rt}</td>
-                <td>${room.qty}</td>
-                ${['ep','cp','map','ap'].map(cls =>
-                  Array(5).fill(`<td class="${cls}"><input type="text" /></td>`).join('')
-                ).join('')}
+                <td>${r.rt}</td>
+                <td>${r.qty}</td>
+                ${rateCategories
+                  .map((rc) =>
+                    rateSubCols
+                      .map((sc) => {
+                        const val = r[rc.toLowerCase()]?.[sc] || ""; // prefill if data exists
+                        return `<td class="${rc.toLowerCase()}"><input type="text" value="${val}" /></td>`;
+                      })
+                      .join("")
+                  )
+                  .join("")}
               </tr>
-            `).join('')}
+            `
+              )
+              .join("")}
           </tbody>
         </table>
-      </div>`;
+      </div>
+    `;
     container.appendChild(block);
   });
 }
-
 // ============================
-// Save & Cancel Button with LocalStorage + Pagination + Edit/View
+// Save & Cancel Button + Edit
 // ============================
-const cancelBtn = hotelForm.querySelector('.search-btn');
-const saveBtn = hotelForm.querySelector('.add-btn');
-const hotelTableBody = document.getElementById('hotelTableBody');
-
+const cancelBtn = hotelForm.querySelector(".search-btn");
+const saveBtn = hotelForm.querySelector(".add-btn");
+const hotelTableBody = document.getElementById("hotelTableBody");
 const HOTELS_PER_PAGE = 15;
 let currentPage = 1;
 
 function getHotels() {
-  return JSON.parse(localStorage.getItem('hotels')) || [];
+  return JSON.parse(localStorage.getItem("hotels")) || [];
 }
-
 function saveHotelsToLocal(hotels) {
-  localStorage.setItem('hotels', JSON.stringify(hotels));
+  localStorage.setItem("hotels", JSON.stringify(hotels));
 }
 
 function addHotelRow(hotel, index) {
-  const row = document.createElement('tr');
+  const row = document.createElement("tr");
   row.innerHTML = `
     <td>${index}</td>
     <td>${hotel.hotelName}</td>
@@ -195,28 +203,36 @@ function addHotelRow(hotel, index) {
     </td>
   `;
 
-  // View with full details (including rates)
-  row.querySelector('.view-hotel-btn').addEventListener('click', () => {
+  row.querySelector(".view-hotel-btn").addEventListener("click", () => {
     let rateDetails = "";
-    Object.keys(touristTypeTables).forEach(type => {
-      const t = touristTypeTables[type];
-      rateDetails += `\n${type} (${t.from} to ${t.to}) - ${t.currency}\nRemarks: ${t.remarks}`;
-    });
-
+    if (hotel.rates && typeof hotel.rates === "object") {
+      Object.keys(hotel.rates).forEach((type) => {
+        const t = hotel.rates[type];
+        rateDetails += `\n\n${type} (${t.from} to ${t.to}) - ${t.currency}\nRemarks: ${t.remarks}\nRooms:\n`;
+        t.rooms.forEach((r) => {
+          rateDetails += ` - ${r.rt}: ${r.qty}\n`;
+        });
+      });
+    }
     alert(
-      `Hotel: ${hotel.hotelName}\nLocation: ${hotel.location}\nRating: ${hotel.tcbRating}\nCategory: ${hotel.category}\nDepartments: ${hotel.departments}\nRooms: ${hotel.rooms}\nRates: ${hotel.rates}\n\n--- Rate Details ---${rateDetails}`
+      `Hotel: ${hotel.hotelName}\nLocation: ${hotel.location}\nRating: ${hotel.tcbRating}\nCategory: ${hotel.category}\nDepartments: ${hotel.departments}\nRooms: ${hotel.rooms}\n\n--- Rate Details ---${rateDetails}`
     );
   });
 
-  // Edit hotel basic info
-  row.querySelector('.edit-hotel-btn').addEventListener('click', () => {
-    hotelForm.style.display = 'block';
-    hotelBtn.textContent = 'Hide Form';
+  row.querySelector(".edit-hotel-btn").addEventListener("click", () => {
+    editingHotelIndex = index - 1;
+    hotelForm.style.display = "block";
+    hotelBtn.textContent = "Hide Form";
+
+    const hotelToEdit = getHotels()[editingHotelIndex];
     const inputs = hotelForm.querySelectorAll('.form-row input[type="text"]');
-    inputs[0].value = hotel.hotelName;
-    inputs[1].value = hotel.location;
-    inputs[2].value = hotel.tcbRating;
-    inputs[3].value = hotel.category;
+    if (inputs[0]) inputs[0].value = hotelToEdit.hotelName;
+    if (inputs[1]) inputs[1].value = hotelToEdit.location;
+    if (inputs[2]) inputs[2].value = hotelToEdit.tcbRating;
+    if (inputs[3]) inputs[3].value = hotelToEdit.category;
+
+    touristTypeTables = JSON.parse(JSON.stringify(hotelToEdit.rates || {}));
+    renderTables();
   });
 
   hotelTableBody.appendChild(row);
@@ -224,100 +240,93 @@ function addHotelRow(hotel, index) {
 
 function renderHotels() {
   const hotels = getHotels();
-  hotelTableBody.innerHTML = '';
-
+  hotelTableBody.innerHTML = "";
   const start = (currentPage - 1) * HOTELS_PER_PAGE;
   const end = start + HOTELS_PER_PAGE;
-  const paginatedHotels = hotels.slice(start, end);
-
-  paginatedHotels.forEach((hotel, i) => addHotelRow(hotel, start + i + 1));
-
-  renderPagination(hotels.length);
+  hotels
+    .slice(start, end)
+    .forEach((hotel, i) => addHotelRow(hotel, start + i + 1));
 }
 
-function renderPagination(totalHotels) {
-  const pagination = document.getElementById('pagination');
-  if (!pagination) return;
-
-  pagination.innerHTML = '';
-
-  const totalPages = Math.ceil(totalHotels / HOTELS_PER_PAGE);
-
-  if (currentPage > 1) {
-    const prevBtn = document.createElement('button');
-    prevBtn.textContent = 'Prev';
-    prevBtn.addEventListener('click', () => {
-      currentPage--;
-      renderHotels();
-    });
-    pagination.appendChild(prevBtn);
-  }
-
-  if (currentPage < totalPages) {
-    const nextBtn = document.createElement('button');
-    nextBtn.textContent = 'Next';
-    nextBtn.addEventListener('click', () => {
-      currentPage++;
-      renderHotels();
-    });
-    pagination.appendChild(nextBtn);
-  }
+if (cancelBtn) {
+  cancelBtn.type = "button";
+  cancelBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    hotelForm.reset();
+    hotelForm.style.display = "none";
+    hotelBtn.textContent = "Add New Hotel";
+    editingHotelIndex = null;
+    touristTypeTables = {};
+    document.getElementById("rateTablesContainer").innerHTML = "";
+  });
 }
 
-// cancel
-cancelBtn.addEventListener('click', () => {
-  hotelForm.reset();
-  hotelForm.style.display = 'none';
-  hotelBtn.textContent = 'Add New Hotel';
-});
+if (saveBtn) {
+  saveBtn.type = "button";
+  saveBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    const inputs = hotelForm.querySelectorAll('.form-row input[type="text"]');
+    const hotelName = inputs[0]?.value.trim() || "";
+    const location = inputs[1]?.value.trim() || "";
+    const tcbRating = inputs[2]?.value.trim() || "";
+    const category = inputs[3]?.value.trim() || "";
 
-// save
-saveBtn.addEventListener('click', (e) => {
-  e.preventDefault();
-  const inputs = hotelForm.querySelectorAll('.form-row input[type="text"]');
-  const hotelName = inputs[0].value.trim();
-  const location = inputs[1].value.trim();
-  const tcbRating = inputs[2].value.trim();
-  const category = inputs[3].value.trim();
+    if (!hotelName || !location) {
+      alert("Please fill required fields (Hotel Name, Location).");
+      return;
+    }
 
-  if (!hotelName || !location) {
-    alert("Please fill Hotel Name and Location.");
-    return;
-  }
+    const departments = Array.from(
+      document.querySelectorAll('#deptEmailContainer input[type="text"]')
+    )
+      .map((d) => d.value)
+      .filter((v) => v)
+      .join(", ");
+    const rooms = Array.from(
+      document.querySelectorAll('#roomTypesContainer input[type="text"]')
+    )
+      .map((r) => r.value)
+      .filter((v) => v)
+      .join(",");
+    const rates = JSON.parse(JSON.stringify(touristTypeTables));
 
-  const departments = Array.from(document.querySelectorAll('#deptEmailContainer input[type="text"]'))
-    .map(d => d.value).join(', ');
-  const rooms = Array.from(document.querySelectorAll('#roomTypesContainer input[type="text"]'))
-    .map(r => r.value).join(', ');
-  const rates = Object.keys(touristTypeTables).join(', ');
+    const newHotel = {
+      hotelName,
+      location,
+      tcbRating,
+      category,
+      departments,
+      rooms,
+      rates,
+    };
+    let hotels = getHotels();
 
-  const newHotel = { hotelName, location, tcbRating, category, departments, rooms, rates };
+    if (editingHotelIndex !== null && editingHotelIndex >= 0) {
+      hotels[editingHotelIndex] = newHotel;
+      editingHotelIndex = null;
+    } else {
+      hotels.push(newHotel);
+    }
 
-  const hotels = getHotels();
-  hotels.push(newHotel);
-  saveHotelsToLocal(hotels);
+    saveHotelsToLocal(hotels);
+    hotelForm.reset();
+    hotelForm.style.display = "none";
+    hotelBtn.textContent = "Add New Hotel";
+    touristTypeTables = {};
+    document.getElementById("rateTablesContainer").innerHTML = "";
 
-  hotelForm.reset();
-  hotelForm.style.display = 'none';
-  hotelBtn.textContent = 'Add New Hotel';
-  document.getElementById('rateTablesContainer').innerHTML = '';
-  touristTypeTables = {};
+    renderHotels();
+  });
+}
 
-  renderHotels();
-});
-
-// ============================
-// Auto-Search Hotel Functionality
-// ============================
-document.getElementById('searchHotel').addEventListener('input', (e) => {
+// Auto-Search Hotel
+document.getElementById("searchHotel").addEventListener("input", (e) => {
   const query = e.target.value.toLowerCase();
-  document.querySelectorAll('#hotelTableBody tr').forEach(row => {
+  document.querySelectorAll("#hotelTableBody tr").forEach((row) => {
     const hotelName = row.cells[1].textContent.toLowerCase();
-    row.style.display = hotelName.includes(query) ? '' : 'none';
+    row.style.display = hotelName.includes(query) ? "" : "none";
   });
 });
 
-// ============================
-// Load stored hotels on page load
-// ============================
-window.addEventListener('load', renderHotels);
+// Load hotels on page load
+window.addEventListener("load", renderHotels);
