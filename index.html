@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Office Management System</title>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="user.css">
+  <link rel="stylesheet" href="hotel.css">
+  <link rel="stylesheet" href="groupchart.css">
+  <link rel="stylesheet" href="guide.css">
+  <link rel="stylesheet" href="v.css">
+</head>
+
+<body>
+  <div class="main-container">
+    <aside class="sidebar">
+      <h2>IDEAL-T-MSD</h2>
+      <hr>
+      <ul>
+        <li onclick="showSection('dashboard')" data-section="dashboard">
+          <span class="material-icons">dashboard</span> Dashboard
+        </li>
+        <li onclick="showSection('userManageUsers')" data-section="userManageUsers">
+          <span class="material-icons">group</span> Manage Users
+        </li>
+        <li onclick="requestPinAndShow('hotelSection')">
+          <span class="material-icons">hotel</span> Manage Hotels
+        </li>
+        <li onclick="requestPinAndShow('carSection')" class="active">
+          <span class="material-icons">directions_car</span> Manage Vehicles
+        </li>
+        <li onclick="requestPinAndShow('guideSection')">
+          <span class="material-icons">emoji_people</span> Manage Guides
+        </li>
+        <li onclick="requestPinAndShow('groupChartSection')">
+          <span class="material-icons">groups</span> Group Chart
+        </li>
+        <li onclick="requestPinAndShow('sanagayAccountant')">
+          <span class="material-icons">account_balance</span> Accountant Section
+        </li>
+      </ul>
+    </aside>
+    <main class="dashboard">
+      <!-- DASHBOARD SECTION -->
+      <section id="dashboard" class="section">
+        <center>
+          <h1>Dashboard</h1>
+        </center>
+        <hr>
+        <div class="cards">
+          <div class="card blue">
+            <h3>1083</h3>
+            <p>Hotels</p>
+          </div>
+          <div class="card green">
+          </div>
+          <div class="card orange">
+            <h3>1665</h3>
+            <p>Reservations</p>
+          </div>
+          <div class="card red">
+            <h3>54</h3>
+            <p>Blockings</p>
+          </div>
+          <div class="card teal">
+            <h3>22</h3>
+            <p>Re-Confirmations</p>
+          </div>
+        </div>
+        <hr>
+        <div style="width: 90%; max-width: 800px; margin: 2rem auto;">
+          <canvas id="incomeExpenseChart"></canvas>
+          <div id="contentArea"></div>
+      </section>
+
+      <!-- MANAGE USERS ACCOUNT -->
+      <section id="userManageUsers" class="section">
+        <h2 class="section-title">
+          <span class="material-icons">manage_accounts</span> Manage Users
+        </h2>
+        <button id="userAddBtn" class="btn btn-primary">Add New User</button>
+
+        <!-- User Form -->
+        <div class="user-form-container" style="display: none;">
+          <div class="user-form-card">
+            <div class="user-form-grid">
+              <div class="user-form-group">
+                <label for="userFullName">Full Name <span>*</span></label>
+                <input type="text" id="userFullName" placeholder="Nima Dorji" required />
+              </div>
+              <div class="user-form-group">
+                <label for="userEmail">Email Address <span>*</span></label>
+                <input type="email" id="userEmail" placeholder="email@example.com" required />
+              </div>
+              <div class="user-form-group">
+                <label for="userPhone">Phone Number</label>
+                <input type="tel" id="userPhone" placeholder="+975-XXXXXXX" />
+              </div>
+              <div class="user-form-group">
+                <label for="userUsername">Username <span>*</span></label>
+                <input type="text" id="userUsername" placeholder="username" required />
+              </div>
+              <div class="user-form-group">
+                <label for="userPassword">Password <span>*</span></label>
+                <div class="password-wrapper">
+                  <input type="password" id="userPassword" placeholder="Create password" required />
+                  <button type="button" class="toggle-password" id="userTogglePassword"
+                    aria-label="Toggle Password Visibility">
+                    <span class="material-icons">visibility</span>
+                  </button>
+                </div>
+                <div class="checkbox-inline">
+                  <input type="checkbox" id="userShowPassword" />
+                  <label for="userShowPassword">Show Password</label>
+                </div>
+              </div>
+            </div>
+
+            <!-- Access Permissions -->
+            <div class="user-form-group full-width">
+              <hr />
+              <center><label>ACCESS PERMISSIONS <span>*</span></label></center>
+              <hr />
+              <div class="permissions">
+                <span id="userSelectAll" class="select-all" tabindex="0" role="button"
+                  aria-label="Select All Permissions">Select All</span>
+                <div class="checkbox-grid">
+                  <label><input type="checkbox" id="userAccessDashboard" /> Dashboard</label>
+                  <label><input type="checkbox" id="userAccessReservations" /> Manage Reservations</label>
+                  <label><input type="checkbox" id="userAccessVehicles" /> Manage Vehicles</label>
+                  <label><input type="checkbox" id="userAccessHotels" /> Manage Hotels</label>
+                  <label><input type="checkbox" id="userManageOperation" /> Manage Operation</label>
+                  <label><input type="checkbox" id="userReservationManager" /> Reservation Manager</label>
+                  <label><input type="checkbox" id="userReservationAssociates" /> Reservation Associates</label>
+                  <label><input type="checkbox" id="userAccountantSector" /> Accountant Sector</label>
+                  <label><input type="checkbox" id="userProfileAccess" /> User Profile</label>
+                </div>
+              </div>
+            </div>
+
+            <!-- Status Toggle -->
+            <div class="user-form-group status-toggle">
+              <label for="userStatusToggle">Account Status:</label>
+              <label class="switch">
+                <input type="checkbox" id="userStatusToggle" checked />
+                <span class="slider round"></span>
+              </label>
+              <span id="userStatusText">Active</span>
+            </div>
+
+            <!-- Actions -->
+            <div class="user-form-actions">
+              <button class="btn btn-danger" type="button" aria-label="Cancel User Form">
+                <span class="material-icons">close</span> Cancel
+              </button>
+              <button class="btn btn-success" id="userSaveBtn" type="button" aria-label="Save User">
+                <span class="material-icons">save</span> Save User
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- User Table -->
+        <div class="table-wrapper">
+          <table class="user-table" aria-label="User Accounts Table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Username</th>
+                <th>Password</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="userTableBody"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- MANAGE CAR SECTION -->
+      <section id="carSection" class="section">
+        <h2 class="section-title">
+          <span class="material-icons">directions_car</span>
+          Manage Car
+        </h2>
+        <hr>
+
+        <!-- Search and Add Button Row -->
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+          <div style="display: flex; gap: 12px;">
+            <input type="text" id="searchCar" placeholder="Search car by driver name or plate no..."
+              style="padding: 10px 14px; font-size: 15px; border-radius: 6px; border: 1.8px solid #ccc; width: 300px;" />
+            <button type="button" id="searchCarBtn" class="carbhty">Search</button>
+          </div>
+          <button id="carBtn" class="carbhty" type="button">Add New Car</button>
+        </div>
+
+        <!-- Car Form -->
+        <form id="carForm" class="car-bht" novalidate>
+          <!-- Basic Info Grid -->
+          <div class="car-grid">
+            <div class="car-group">
+              <label for="carPlate">Car No. / Plate No.</label>
+              <input type="text" id="carPlate" name="carPlate" required autocomplete="off" />
+            </div>
+
+            <div class="car-group">
+              <label for="carType">Car Type</label>
+              <select id="carType" name="carType" required>
+                <option>Car</option>
+                <option>Van</option>
+                <option>Bus</option>
+                <option>SUV</option>
+                <option>Luxury</option>
+              </select>
+            </div>
+
+            <div class="car-group">
+              <label for="carSeat">Seating Capacity</label>
+              <input type="number" id="carSeat" name="carSeat" min="1" autocomplete="off" />
+            </div>
+
+            <div class="car-group">
+              <label for="carColor">Color</label>
+              <input type="text" id="carColor" name="carColor" autocomplete="off" />
+            </div>
+          </div>
+
+          <!-- Next 4 Fields in a Line -->
+          <div class="four-in-line">
+            <div class="car-group">
+              <label for="carDriver">Driver Name</label>
+              <input type="text" id="carDriver" name="carDriver" autocomplete="off" />
+            </div>
+
+            <div class="car-group">
+              <label for="carPhone">Driver Phone</label>
+              <input type="text" id="carPhone" name="carPhone" autocomplete="off" />
+            </div>
+
+            <div class="car-group">
+              <label for="carStatus">Car Status</label>
+              <select id="carStatus" name="carStatus">
+                <option>Available</option>
+                <option>On Trip</option>
+                <option>Under Maintenance</option>
+              </select>
+            </div>
+
+            <div class="car-group">
+              <label for="carRegisteredDate">Registered Date</label>
+              <input type="date" id="carRegisteredDate" name="carRegisteredDate" required />
+            </div>
+          </div>
+
+          <!-- Form Buttons -->
+          <div class="form-buttons">
+            <button type="button" class="cancel-btn">Cancel</button>
+            <button type="submit" class="save-btn">Save</button>
+          </div>
+        </form>
+
+        <!-- Car Data Table -->
+        <div class="car-table-container">
+          <table class="car-table">
+            <thead>
+              <tr>
+                <th>SI NO</th>
+                <th>Plate No.</th>
+                <th>Type</th>
+                <th>Seats</th>
+                <th>Color</th>
+                <th>Driver</th>
+                <th>Phone</th>
+                <th>Status</th>
+                <th>Registered</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="carTableBody">
+              <!-- Dynamic Rows -->
+            </tbody>
+          </table>
+          <div class="nextandpreviousbht">
+            <button id="prevPageBtn" class="btn btn-outline-secondary">Previous</button>
+            <button id="nextPageBtn" class="btn btn-outline-secondary">Next</button>
+          </div>
+        </div>
+      </section>
+
+      <!--MANAGE GUIDE SECTION-->
+      <section id="guideSection" class="section">
+        <h2 class="section-title">
+          <span class="material-icons">badge</span>
+          Manage Guide
+        </h2>
+        <hr>
+        <!-- Search and Add Button Row -->
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+          <div style="display: flex; gap: 12px;">
+            <input type="text" id="searchGuide" placeholder="Search guide by name..."
+              style="padding: 10px 14px; font-size: 15px; border-radius: 6px; border: 1.8px solid #ccc; width: 300px;" />
+            <button type="button" id="searchGuideBtn" class="guidebhty">Search</button>
+          </div>
+          <button id="guideBtn" class="guidebhty" type="button">Add New Guide</button>
+        </div>
+        <form id="guideForm" class="guide-bht" novalidate>
+          <!-- Other guide info fields (first 4) stay in the existing grid -->
+          <div class="guide-grid">
+            <div class="guide-group">
+              <label for="guideName">Guide Name</label>
+              <input type="text" id="guideName" name="guideName" required autocomplete="off" />
+            </div>
+
+            <div class="guide-group">
+              <label for="guideSpecialize">Specialize</label>
+              <select id="guideSpecialize" name="guideSpecialize">
+                <option>Culture</option>
+                <option>Trekking</option>
+                <option>Bird Watching</option>
+                <option>Flora & Fauna</option>
+                <option>Photography</option>
+              </select>
+            </div>
+
+            <div class="guide-group">
+              <label for="guideGender">Gender</label>
+              <select id="guideGender" name="guideGender" required>
+                <option>Male</option>
+                <option>Female</option>
+                <option>Other</option>
+              </select>
+            </div>
+
+            <div class="guide-group">
+              <label for="guideLanguage">Languages Spoken</label>
+              <input type="text" id="guideLanguage" name="guideLanguage" autocomplete="off" />
+            </div>
+          </div>
+
+          <!-- Wrap these 4 fields in one line -->
+          <div class="four-in-line">
+            <div class="guide-group">
+              <label for="guideLicense">Guide License No.</label>
+              <input type="text" id="guideLicense" name="guideLicense" autocomplete="off" />
+            </div>
+
+            <div class="guide-group">
+              <label for="guidePhone">Phone Number</label>
+              <input type="text" id="guidePhone" name="guidePhone" autocomplete="off" />
+            </div>
+
+            <div class="guide-group">
+              <label for="guideEmail">Mail Address</label>
+              <input type="email" id="guideEmail" name="guideEmail" autocomplete="off" />
+            </div>
+          </div>
+          <!-- Form Buttons -->
+          <div class="form-buttons">
+            <button type="button" class="cancel-btn">Cancel</button>
+            <button type="submit" class="save-btn">Save</button>
+          </div>
+        </form>
+        <!-- Guide Data Table -->
+        <div class="guide-table-container">
+          <table class="guide-table">
+            <thead>
+              <tr>
+                <th>SI NO</th>
+                <th>Name</th>
+                <th>Specialize</th>
+                <th>Gender</th>
+                <th>Language</th>
+                <th>License</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="guideTableBody">
+              <!-- Dynamic Rows -->
+            </tbody>
+          </table>
+          <div class="nextandpreviousbht">
+            <button id="prevPageBtn" class="btn btn-outline-secondary">Previous</button>
+            <button id="nextPageBtn" class="btn btn-outline-secondary">Next</button>
+          </div>
+        </div>
+      </section>
+
+      <!--Hotel manage-->
+      <section id="hotelSection" class="section">
+        <h2 class="section-title">
+          <span class="material-icons">hotel</span> Manage Hotel
+        </h2>
+        <hr>
+
+        <!-- Search and Add Button -->
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+          <div style="display: flex; gap: 12px;">
+            <input type="text" id="searchHotel" placeholder="Search hotel by name..."
+              style="padding: 10px 14px; font-size: 15px; border-radius: 6px; border: 1.8px solid #ccc; width: 300px;" />
+            <button type="button" id="searchHotelBtn" class="guidebhty">Search</button>
+          </div>
+          <button id="hotelBtn" class="guidebhty" type="button">Add New Hotel</button>
+        </div>
+        <hr>
+
+        <!-- Hotel Form -->
+        <form id="hotelForm" class="hotel-form" novalidate>
+          <!-- Basic Info -->
+          <div class="form-row">
+            <div class="form-group"><label>Hotel Name</label><input type="text" /></div>
+            <div class="form-group"><label>Location</label><input type="text" /></div>
+            <div class="form-group"><label>TCB Rating</label><input type="text" /></div>
+            <div class="form-group"><label>Our Categorization</label><input type="text" /></div>
+          </div>
+
+          <!-- Department Email & Phone -->
+          <div class="form-row">
+            <div class="form-group" id="deptEmailContainer">
+              <label><b>Department & Email</b></label>
+              <div class="qty-room-wrapper dept-wrapper">
+                <input type="text" placeholder="Department Name" />
+                <input type="email" placeholder="Email" />
+                <button type="button" class="remove-room-btn">×</button>
+                <button type="button" class="add-room-btn">+</button>
+              </div>
+            </div>
+
+            <div class="form-group" id="deptPhoneContainer">
+              <label><b>Department & Phone</b></label>
+              <div class="qty-room-wrapper dept-wrapper">
+                <input type="text" placeholder="Department Name" />
+                <input type="number" placeholder="Phone/Mobile" />
+                <button type="button" class="remove-room-btn">×</button>
+                <button type="button" class="add-room-btn">+</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Room Types -->
+          <label><b>Room Types & Qty</b></label>
+          <div id="roomTypesContainer">
+            <div class="qty-room-wrapper">
+              <input type="text" placeholder="Room Type" />
+              <input type="number" value="0" min="0" />
+              <button type="button" class="remove-room-btn">×</button>
+              <button type="button" class="add-room-btn" title="Add Room Type">+</button>
+            </div>
+          </div>
+          <hr />
+
+          <!-- Rate Section -->
+          <div class="rate-section">
+            <div class="rate-controls">
+              <div class="form-group">
+                <label>Tourist Type</label>
+                <select id="touristType">
+                  <option value="">Select</option>
+                  <option value="Regional">Regional</option>
+                  <option value="International">International</option>
+                  <option value="InternationalandRegional">International & Regional</option>
+                  <option value="Asian">Asian</option>
+                  <option value="Others">Others</option>
+                </select>
+              </div>
+              <div class="form-group"><label>Rate Valid From</label><input type="date" id="rateFrom" /></div>
+              <div class="form-group"><label>To</label><input type="date" id="rateTo" /></div>
+              <div class="form-group"><label>Remarks</label><input type="text" id="remarks" /></div>
+              <div class="form-group">
+                <label>Currency</label>
+                <select id="currency">
+                  <option value="">Select</option>
+                  <option value="BTN">BTN</option>
+                  <option value="USD">USD</option>
+                </select>
+              </div>
+              <button class="btn btn-add" id="addTableBtn" type="button">Add</button>
+            </div>
+            <div id="rateTablesContainer"></div>
+          </div>
+
+          <!-- Form Buttons -->
+          <div class="form-buttons" style="margin-top:20px;">
+            <button type="button" class="btn search-btn">Cancel</button>
+            <button type="submit" class="btn add-btn">Save</button>
+          </div>
+        </form>
+
+        <!-- Hotel Data Table -->
+        <div class="car-table-container">
+          <table class="car-table">
+            <thead>
+              <tr>
+                <th>SI NO</th>
+                <th>Hotel Name</th>
+                <th>Location</th>
+                <th>TCB Rating</th>
+                <th>Category</th>
+                <th>Departments</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="hotelTableBody"></tbody>
+          </table>
+          <div class="nextandpreviousbht">
+            <button id="prevHotelPageBtn" class="btn search-btn">Previous</button>
+            <button id="nextHotelPageBtn" class="btn search-btn">Next</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================
+     NEPTUNE GROUP CHART SECTION
+============================= -->
+      <section id="groupChartSection" class="section">
+        <h2 class="section-title">🌐 Neptune Group Chart</h2>
+
+        <button id="toggleFormBtn" class="btn btn-primary">Add New Group</button>
+
+        <!-- Group Form -->
+        <div id="groupForm" style="display:none; margin-top:20px;">
+          <h3>Add Group Details</h3>
+          <form id="neptuneForm">
+
+            <!-- Basic Details -->
+            <fieldset>
+              <legend>Basic Details</legend>
+              <div class="form-row">
+                <label>File No</label>
+                <input type="text" id="fileNo" required>
+                <label>Group Name</label>
+                <input type="text" id="groupName" required>
+              </div>
+              <div class="form-row">
+                <label>Travel Date</label>
+                <input type="date" id="travelDate">
+                <label>Nights</label>
+                <input type="number" id="nights">
+              </div>
+            </fieldset>
+
+            <!-- Pax Info -->
+            <fieldset>
+              <legend>Pax Information</legend>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Adults</th>
+                    <th>Kids</th>
+                    <th>Total</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Regional</td>
+                    <td><input type="number" id="regionalAdults" value="0"></td>
+                    <td><input type="number" id="regionalKids" value="0"></td>
+                    <td id="regionalTotal">0</td>
+                  </tr>
+                  <tr>
+                    <td>International</td>
+                    <td><input type="number" id="intlAdults" value="0"></td>
+                    <td><input type="number" id="intlKids" value="0"></td>
+                    <td id="intlTotal">0</td>
+                  </tr>
+                  <tr>
+                    <td>Other</td>
+                    <td><input type="number" id="otherAdults" value="0"></td>
+                    <td><input type="number" id="otherKids" value="0"></td>
+                    <td id="otherTotal">0</td>
+                  </tr>
+                </tbody>
+              </table>
+            </fieldset>
+
+            <!-- Arrival / Departure -->
+            <fieldset>
+              <legend>Arrival & Departure</legend>
+              <div class="form-row">
+                <label>Arrival Date</label>
+                <input type="date" id="arrivalDate">
+                <label>Departure Date</label>
+                <input type="date" id="departureDate">
+              </div>
+              <div class="form-row">
+                <label>Arrival Flight</label>
+                <input type="text" id="arrivalFlight">
+                <label>Departure Flight</label>
+                <input type="text" id="departureFlight">
+              </div>
+            </fieldset>
+
+            <!-- Tabs -->
+            <div class="tabs">
+              <button type="button" class="tab-btn active" data-tab="hotels">Hotels</button>
+              <button type="button" class="tab-btn" data-tab="guides">Guides & Vehicles</button>
+              <button type="button" class="tab-btn" data-tab="services">Other Services</button>
+            </div>
+
+            <div id="hotels" class="tab-content active">
+              <p>Hotel allocation details go here...</p>
+            </div>
+
+            <div id="guides" class="tab-content">
+              <p>Guide & vehicle allocation goes here...</p>
+            </div>
+
+            <div id="services" class="tab-content">
+              <p>Other services form goes here...</p>
+            </div>
+
+            <div style="margin-top:15px;">
+              <button type="submit" class="btn btn-success">Save Group</button>
+              <button type="reset" class="btn btn-secondary">Cancel</button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Group Table -->
+        <div id="groupTableContainer" style="margin-top:20px;">
+          <div class="search-row">
+            <input type="text" id="searchInput" placeholder="Search by File No or Group Name">
+          </div>
+          <table id="groupTable">
+            <thead>
+              <tr>
+                <th>File No</th>
+                <th>Group Name</th>
+                <th>Travel Date</th>
+                <th>Nights</th>
+                <th>Regional</th>
+                <th>International</th>
+                <th>Other</th>
+                <th>Arrival</th>
+                <th>Departure</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+          <div class="pagination">
+            <button id="prevPage" class="btn btn-secondary">Previous</button>
+            <button id="nextPage" class="btn btn-secondary">Next</button>
+          </div>
+        </div>
+      </section>
+      <script src="app.js"></script>
+      <script src="user.js"></script>
+      <script src="hotel.js"></script>
+      <script src="groupchart.js"></script>
+      <script src="guide.js"></script>
+      <script src="vehicle.js"></script>
+</body>
+
+</html>

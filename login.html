@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Login | Travel-MSD</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f2f5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .login-box {
+      background: white;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      width: 300px;
+    }
+
+    .login-box h2 {
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+
+    .login-box input {
+      width: 100%;
+      padding: 10px;
+      margin: 0.5rem 0;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    .login-box button {
+      width: 100%;
+      padding: 10px;
+      background: #3498db;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      margin-top: 1rem;
+      cursor: pointer;
+    }
+
+    .login-box button:hover {
+      background: #2980b9;
+    }
+
+    .error {
+      color: red;
+      font-size: 0.9rem;
+      text-align: center;
+      margin-top: 0.5rem;
+    }
+
+    .options {
+      text-align: center;
+      margin-top: 1rem;
+      font-size: 0.9rem;
+    }
+
+    .options a {
+      color: #3498db;
+      text-decoration: none;
+      margin: 0 5px;
+    }
+
+    .options a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+
+<body>
+  <section id="login" class="section">
+
+    <div class="login-box">
+      <h2>Login</h2>
+      <input type="text" id="username" placeholder="Username" />
+      <input type="password" id="password" placeholder="Password" />
+      <div class="error" id="errorMsg"></div>
+      <button onclick="login()">Login</button>
+      <div class="options">
+        <a href="#" onclick="alert('Contact admin to reset your password.')">Forgot Password?</a><br />
+      </div>
+    </div>
+  </section>
+  <script>
+    function login() {
+      const username = document.getElementById("username").value.trim();
+      const password = document.getElementById("password").value.trim();
+      const errorMsg = document.getElementById("errorMsg");
+
+      const user1Data = JSON.parse(localStorage.getItem("user1Accounts")) || [];
+
+      const foundUser = user1Data.find(
+        (u) => u.username === username && u.password === password
+      );
+
+      if (foundUser) {
+        if (foundUser.status !== "Active") {
+          errorMsg.textContent = "Account is inactive.";
+          return;
+        }
+        localStorage.setItem("loggedInUser", JSON.stringify(foundUser));
+        window.location.href = "index.html"; // Redirect to main page
+      } else {
+        errorMsg.textContent = "Invalid username or password.";
+      }
+    }
+
+    // Trigger login on Enter key
+    ["username", "password"].forEach((id) => {
+      const input = document.getElementById(id);
+      if (input) {
+        input.addEventListener("keydown", function (e) {
+          if (e.key === "Enter") login();
+        });
+      }
+    });
+  </script>
+</body>
+
+</html>

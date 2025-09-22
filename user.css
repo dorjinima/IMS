@@ -1,0 +1,416 @@
+/* ============================ */
+/* ===== Section & Title ===== */
+/* ============================ */
+#userManageUsers {
+  padding: 20px;
+  background-color: #fafafa;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-family: Arial, sans-serif;
+  color: #333;
+  max-width: 1200px;
+  margin: 0 auto 40px;
+}
+
+#userManageUsers .section-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #0d47a1;
+}
+
+#userManageUsers .section-title .material-icons {
+  font-size: 2.2rem;
+}
+
+/* ============================ */
+/* ===== Add New User Button ===== */
+/* ============================ */
+#userAddBtn {
+  background-color: #0d47a1;
+  color: white;
+  border-radius: 6px;
+  padding: 10px 18px;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 10px;
+  user-select: none;
+  float: right; /* aligns left */
+}
+
+#userAddBtn:hover {
+  background-color: #083972;
+}
+
+/* Clear float */
+#userManageUsers::after {
+  content: "";
+  display: block;
+  clear: both;
+}
+
+/* ============================ */
+/* ===== User Form Container ===== */
+/* ============================ */
+.userFormContainer {
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  box-shadow: 0 1px 8px rgba(0,0,0,0.12);
+  margin-bottom: 30px;
+  display: none; /* toggled by JS */
+}
+
+/* ===== Form Card ===== */
+.formCard {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* ===== Form Grid ===== */
+.formGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+/* ===== Form Group ===== */
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.formGroup label {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #333;
+}
+
+.formGroup label span {
+  color: #e74c3c;
+  margin-left: 4px;
+}
+
+/* ===== Inputs ===== */
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="password"] {
+  padding: 10px 12px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  width: 100%;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease;
+}
+
+input:focus {
+  border-color: #0d47a1;
+  outline: none;
+}
+
+/* ===== Password Wrapper ===== */
+.passwordWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.passwordWrapper input {
+  flex-grow: 1;
+}
+
+.togglePassword {
+  position: absolute;
+  right: 8px;
+  background: transparent;
+  border: none;
+  color: #0d47a1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  font-size: 1.2rem;
+  user-select: none;
+}
+
+.togglePassword:hover {
+  color: #083972;
+}
+
+/* ===== Checkbox Inline ===== */
+.checkboxInline {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+  margin-top: 8px;
+  user-select: none;
+}
+
+.checkboxInline input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+/* ============================ */
+/* ===== Permissions Section ===== */
+/* ============================ */
+.fullWidth {
+  width: 100%;
+}
+
+.permissions {
+  margin-top: 10px;
+}
+
+.selectAll {
+  background-color: #0d47a1;
+  color: white;
+  padding: 5px 14px;
+  border-radius: 20px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-block;
+  margin-bottom: 12px;
+  user-select: none;
+}
+
+.selectAll:hover,
+.selectAll:focus {
+  background-color: #083972;
+  outline: none;
+}
+
+.checkboxGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 20px;
+  font-weight: 500;
+  color: #34495e;
+}
+
+.checkboxGrid label {
+  min-width: 160px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.checkboxGrid input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+/* ============================ */
+/* ===== Status Toggle ===== */
+/* ============================ */
+.statusToggle {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 600;
+  color: #2c3e50;
+  user-select: none;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 46px;
+  height: 24px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+  position: absolute;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: #ccc;
+  border-radius: 34px;
+  transition: 0.3s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  border-radius: 50%;
+  transition: 0.3s;
+}
+
+input:checked + .slider {
+  background-color: #27ae60;
+}
+
+input:checked + .slider:before {
+  transform: translateX(22px);
+}
+
+#userStatusText {
+  font-weight: 600;
+  color: #27ae60;
+}
+
+/* ============================ */
+/* ===== Form Action Buttons ===== */
+/* ============================ */
+.formActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.formActions button {
+  min-width: 110px;
+  font-size: 1rem;
+  padding: 10px 18px;
+  border-radius: 6px;
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.btnDanger {
+  background-color: #f44336;
+  color: white;
+}
+
+.btnDanger:hover {
+  background-color: #d32f2f;
+}
+
+.btnSuccess {
+  background-color: #0d47a1;
+  color: white;
+}
+
+.btnSuccess:hover {
+  background-color: #083972;
+}
+
+/* ============================ */
+/* ===== User Table ===== */
+/* ============================ */
+.tableWrapper {
+  overflow-x: auto;
+  margin-top: 30px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  box-shadow: 0 1px 8px rgba(0,0,0,0.1);
+}
+
+.userTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+.userTable thead {
+  background-color: #0d47a1;
+  color: white;
+}
+
+.userTable th,
+.userTable td {
+  padding: 12px 16px;
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.userTable tbody tr:hover {
+  background-color: #f0f8ff;
+}
+
+.userTable button {
+  padding: 6px 12px;
+  font-size: 0.85rem;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  user-select: none;
+}
+
+.userTable button.btnPrimary {
+  background-color: #0d47a1;
+  color: white;
+}
+
+.userTable button.btnPrimary:hover {
+  background-color: #083972;
+}
+
+.userTable button.btnDanger {
+  background-color: #f44336;
+  color: white;
+}
+
+.userTable button.btnDanger:hover {
+  background-color: #d32f2f;
+}
+
+/* ============================ */
+/* ===== Responsive ===== */
+/* ============================ */
+@media (max-width: 1024px) {
+  .formGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .formGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .checkboxGrid {
+    flex-direction: column;
+  }
+
+  .userTable thead {
+    display: none;
+  }
+
+  .userTable tbody tr {
+    display: block;
+    margin-bottom: 20px;
+  }
+
+  .userTable tbody td {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #eee;
+    padding: 10px 14px;
+  }
+
+  .userTable tbody td::before {
+    content: attr(data-label);
+    font-weight: 600;
+    color: #0d47a1;
+  }
+}

@@ -1,0 +1,243 @@
+/* ===== Guide Section & Title ===== */
+#guideSection {
+  padding: 20px;
+  background-color: #fafafa;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-family: Arial, sans-serif;
+  color: #333;
+  max-width: 1200px;
+  margin: 0 auto 40px;
+}
+
+#guideSection .section-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #0d47a1;
+}
+
+#guideSection .section-title .material-icons {
+  font-size: 28px;
+  color: #0d47a1;
+}
+
+/* ===== Controls (Search + Add Button) ===== */
+#guideSection > div[style*="flex"] {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+#guideSection > div[style*="flex"] > div {
+  display: flex;
+  gap: 10px;
+  flex-grow: 1;
+  max-width: 500px;
+}
+
+#searchGuide {
+  height: 38px;
+  padding: 0 12px;
+  font-size: 1rem;
+  border-radius: 6px 0 0 6px;
+  border: 1px solid #ccc;
+  border-right: none;
+  outline: none;
+  transition: border-color 0.3s ease;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+#searchGuide:focus {
+  border-color: #0d47a1;
+}
+
+.guidebhty {
+  padding: 0 18px;
+  height: 38px;
+  border-radius: 0 6px 6px 0;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #ccc;
+  border-left: none;
+  background-color: #0d47a1;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.guidebhty:hover {
+  background-color: #083972;
+}
+
+/* ===== Guide Form ===== */
+#guideForm.guide-bht {
+  background: #fff;
+  padding: 20px 24px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  max-height: 600px;
+  overflow-y: auto;
+  display: none;
+}
+
+/* ===== Form Layout Grid ===== */
+.guide-grid,
+.four-in-line {
+  display: flex;
+  gap: 20px;
+  flex-wrap: nowrap;
+  margin-bottom: 20px;
+}
+
+.guide-group {
+  flex: 1 1 180px;
+  min-width: 200px;
+  display: flex;
+  flex-direction: column;
+}
+
+.guide-group label {
+  font-weight: 600;
+  margin-bottom: 6px;
+  font-size: 0.95rem;
+  color: #333;
+}
+
+.guide-group input,
+.guide-group select {
+  padding: 10px 12px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease;
+}
+
+.guide-group input:focus,
+.guide-group select:focus {
+  border-color: #0d47a1;
+  outline: none;
+}
+
+/* ===== Form Buttons ===== */
+.form-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.cancel-btn,
+.save-btn {
+  padding: 10px 24px;
+  font-size: 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  border: none;
+  min-width: 120px;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+
+.cancel-btn {
+  background-color: #f44336;
+  color: white;
+}
+
+.cancel-btn:hover {
+  background-color: #d32f2f;
+}
+
+.save-btn {
+  background-color: #0d47a1;
+  color: white;
+}
+
+.save-btn:hover {
+  background-color: #083972;
+}
+
+/* ===== Guide Table ===== */
+.guide-table-container {
+  margin-top: 30px;
+  overflow-x: auto;
+  border-radius: 10px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+}
+
+.guide-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.guide-table th,
+.guide-table td {
+  border: 1px solid #ccc;
+  padding: 8px 12px;
+  text-align: left;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.guide-table th {
+  background-color: #e3f2fd;
+  font-weight: 600;
+  color: #0d47a1;
+}
+
+.guide-table tbody tr:hover {
+  background-color: #f1f9f6;
+}
+
+/* Table Action Buttons */
+.guide-table td button {
+  background-color: #2196f3;
+  border: none;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+}
+
+.guide-table td button:hover {
+  background-color: #1976d2;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+  .guide-grid,
+  .four-in-line {
+    flex-wrap: wrap;
+  }
+
+  .guide-group {
+    flex: 1 1 100%;
+    min-width: auto;
+  }
+
+  .form-buttons {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+@media (max-width: 480px) {
+  #searchGuide {
+    width: 100%;
+  }
+}

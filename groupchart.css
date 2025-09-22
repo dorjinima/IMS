@@ -1,0 +1,353 @@
+/* === Header with Search (left) and Add Button (right) === */
+.vehicles-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 10px;
+}
+
+/* Search Controls Wrapper (left side) */
+.search-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  max-width: 400px;
+  width: 100%;
+}
+
+/* Search Box Styling */
+.search-box {
+  flex-grow: 1;
+  background: #f1f1f1;
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  display: flex;
+  align-items: center;
+}
+
+.search-box input {
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 14px;
+  padding-left: 8px;
+}
+
+/* Search Button */
+.search-btn {
+  padding: 10px 18px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background-color 0.3s ease;
+}
+
+.search-btn:hover {
+  background-color: #43a047;
+}
+
+/* Add New Group Button (Right Side) */
+.add-vehicle-btn {
+  background: #4caf50;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: background-color 0.3s ease;
+}
+
+.add-vehicle-btn:hover {
+  background-color: #43a047;
+}
+
+/* === Form Container === */
+#neptuneGroupChartForm {
+  margin-top: 20px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 20px;
+  background-color: #fafafa;
+  display: none;
+}
+
+/* Headings in Form */
+#neptuneGroupChartForm h3 {
+  margin-bottom: 10px;
+  font-weight: 700;
+  color: #4caf50;
+}
+
+/* === Form Fields === */
+.neptune-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.neptune-group {
+  flex: 1 1 calc(25% - 15px);
+  display: flex;
+  flex-direction: column;
+  min-width: 200px;
+}
+
+.neptune-group label {
+  font-weight: 600;
+  margin-bottom: 6px;
+  font-size: 14px;
+}
+
+.neptune-group input,
+.neptune-group select {
+  padding: 8px 10px;
+  font-size: 14px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  transition: border-color 0.2s ease;
+}
+
+.neptune-group input:focus,
+.neptune-group select:focus {
+  border-color: #4caf50;
+  outline: none;
+}
+
+/* === Tables === */
+.pax-table-wrapper,
+.group-chart-scroll {
+  max-width: 100%;
+  overflow-x: auto;
+  margin-bottom: 20px;
+}
+
+.pax-info-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  min-width: 400px;
+}
+
+.pax-info-table th,
+.pax-info-table td {
+  border: 1px solid #ddd;
+  padding: 8px 12px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+/* === Arrival & Departure === */
+.arrival-departure-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.arrival-block,
+.departure-block {
+  flex: 1 1 300px;
+  background: #fff;
+  padding: 15px;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+}
+
+.arrival-block strong,
+.departure-block strong {
+  display: block;
+  margin-bottom: 12px;
+  font-weight: 700;
+  color: #4caf50;
+}
+
+/* === Checkbox Group === */
+.checkbox-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.checkbox-group label {
+  font-size: 14px;
+  user-select: none;
+  cursor: pointer;
+}
+
+.checkbox-group input[type="checkbox"] {
+  margin-right: 6px;
+}
+
+/* === Tabs === */
+.tab-btn {
+  padding: 8px 16px;
+  border: 1px solid #4caf50;
+  background-color: white;
+  color: #4caf50;
+  margin: 5px 5px 15px 0;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s ease-in-out;
+}
+
+.tab-btn.active,
+.tab-btn:hover {
+  background-color: #4caf50;
+  color: white;
+}
+
+.section-tab {
+  display: none;
+  margin-top: 10px;
+}
+
+/* === Save / Cancel Buttons === */
+.neptune-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 25px;
+}
+
+.neptune-cancel-btn,
+.neptune-submit-btn {
+  padding: 10px 24px;
+  font-size: 15px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-weight: 700;
+  transition: background-color 0.3s ease;
+  min-width: 100px;
+}
+
+.neptune-cancel-btn {
+  background-color: #f44336;
+  color: white;
+}
+
+.neptune-cancel-btn:hover {
+  background-color: #d32f2f;
+}
+
+.neptune-submit-btn {
+  background-color: #2196f3;
+  color: white;
+}
+
+.neptune-submit-btn:hover {
+  background-color: #1976d2;
+}
+
+/* === Data Table === */
+.group-chart-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  min-width: 1500px;
+}
+
+.group-chart-table th,
+.group-chart-table td {
+  border: 1px solid #444;
+  padding: 8px 10px;
+  text-align: center;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+/* Sticky Header */
+.group-chart-table thead th {
+  position: sticky;
+  top: 0;
+  background-color: #f4f6f8;
+  z-index: 10;
+  font-weight: 700;
+  color: #333;
+  text-transform: uppercase;
+}
+
+/* Table Styling */
+.group-chart-table tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.group-chart-table tbody tr:hover {
+  background-color: #e6f7ff;
+  transition: background-color 0.3s ease;
+}
+
+.group-chart-table button {
+  padding: 5px 10px;
+  font-size: 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  margin: 0 2px;
+  font-weight: 600;
+  transition: background-color 0.25s ease;
+}
+
+.group-chart-table button.edit-btn {
+  background-color: #1976d2;
+  color: white;
+}
+
+.group-chart-table button.edit-btn:hover {
+  background-color: #155a9c;
+}
+
+.group-chart-table button.delete-btn {
+  background-color: #e53935;
+  color: white;
+}
+
+.group-chart-table button.delete-btn:hover {
+  background-color: #ab2a24;
+}
+
+/* === Responsive === */
+@media (max-width: 1024px) {
+  .neptune-group {
+    flex: 1 1 calc(50% - 15px);
+  }
+
+  .arrival-departure-wrapper {
+    flex-direction: column;
+  }
+
+  .vehicles-header {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .search-controls {
+    width: 100%;
+  }
+
+  .add-vehicle-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 600px) {
+  .neptune-group {
+    flex: 1 1 100%;
+  }
+}
